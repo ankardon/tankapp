@@ -1,8 +1,8 @@
+/* eslint-disable react/prop-types */
 import "leaflet/dist/leaflet.css";
-
-import { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { MapContainer, Marker, TileLayer, useMapEvents} from "react-leaflet";
+import { MapContainer, Marker, TileLayer} from "react-leaflet";
 
 import * as L from "leaflet";
 import SortableTable from "./SortableTable";
@@ -20,18 +20,18 @@ const selectedIcon = L.icon({
   iconAnchor: [12, 40],
 });
 
-function SelectableMarker({obj, isSelected, setSelectedId}){
+function SelectableMarker({entry, isSelected, setSelectedId}){
 
-  console.log(obj)
-  return obj === null || obj.latlng === null ? null : (
-    <Marker position={obj.latlng}
+  console.log(entry)
+  return entry === null || entry.latlng === null ? null : (
+    <Marker position={entry.latlng}
     
     eventHandlers={{
-      click: (e) => {
-        setSelectedId(obj.id);
+      click: () => {
+        setSelectedId(entry.id);
       },
     }}
-    key={obj.id}
+    key={entry.id}
     riseOnHover={true}
     zIndexOffset={isSelected?100:1}
     icon={isSelected ? selectedIcon : unselectedIcon}
@@ -135,7 +135,7 @@ function App() {
   // This outputs the sorting indicator depending on the given key and the current sorting selection
 
   const GLOBAL_BOUNDS = preprocessedData
-    .map((obj) => obj.latlng)
+    .map((entry) => entry.latlng)
     .reduce(
       ([minLat, minLng, maxLat, maxLng], [currentLat, currentLng]) => {
         return [
@@ -148,10 +148,10 @@ function App() {
       [1000, 1000, -1000, -1000],
     );
 
-  const markers = preprocessedData.map((obj) => {
-    const isSelected = obj.id === selectedId;
+  const markers = preprocessedData.map((entry) => {
+    const isSelected = entry.id === selectedId;
     return (
-      <SelectableMarker obj={obj} isSelected={isSelected} setSelectedId={setSelectedId} />);
+      <SelectableMarker entry={entry} key={entry.id} isSelected={isSelected} setSelectedId={setSelectedId} />);
   });
 
   return (

@@ -1,4 +1,5 @@
-import { useRef } from "react";
+/* eslint-disable react/prop-types */
+import React, { useRef } from "react";
 
 export default function SortableTable({
   keyMappings,
@@ -37,12 +38,11 @@ export default function SortableTable({
       default:
         break;
     }
-    if (key === "street"){
-    }
     return (
       <th
         className={`sticky top-0 py-3 bg-white text-left ${conditional_width}`}
-        onClick={(e) => {
+        key={key}
+        onClick={() => {
           setSorting({
             key: key,
             asc: (sorting.key === key) && !sorting.asc,
@@ -56,13 +56,14 @@ export default function SortableTable({
 
   const rows = preprocessedData.map((entry) => {
     const elements = Object.keys(keyMappings).map((key) => {
-      return <td className="text-left"> {entry[key]}</td>;
+      return <td className="text-left" key={entry.id}> {entry[key]}</td>;
     });
     const isSelected = entry.id === selectedId;
     if (isSelected) {
       return (
         <tr
-        className="bg-black text-white"
+          className="bg-black text-white"
+          key={entry.id}
           ref={(ref) => {
             // this uses the ref solely as a way to scroll the selected row into view just at the instance of its selection.
             if (ref !== null){
@@ -83,7 +84,7 @@ export default function SortableTable({
       );
     }
     return (
-      <tr onClick={() => setSelectedId(entry.id)}>
+      <tr key={entry.id} onClick={() => setSelectedId(entry.id)}>
         {elements}
       </tr>
     );
