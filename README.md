@@ -3,12 +3,16 @@
 ![alt text](image.png)
 
 ## Installation
+
 ```sh
 $ git clone https://github.com/ankardon/tankapp.git
 $ cd tankapp
 $ npm install
 $ npm start
 ```
+
+Der Server läuft anschließend auf Port 3000 und kann über localhost:3000 im Browser aufgerufen werden.
+
 ## Kollaboratives Arbeiten
 
 Mittel die man für die optimale Zusammenarbeit und verbesserung der Code Qualität einsetzen kann sind vielfältig.
@@ -46,7 +50,6 @@ Dafür könnte in express.js eine Middleware wie Passport.js genutzt werden.
 Hosting der Applikation
 
 Für das Hosting der SPA sollte sie zunächst in ein kompaktes Bundle gebaut und minified werden. Eine einfache Hosting-Option, falls keine eigene CRUD-Schnittstelle implementiert wird, ist das Hosten als statische Seite auf einem Dienst wie GitHub Pages. Soll jedoch die CRUD-Funktionalität enthalten sein, wird ein Server für die Ausführung des Codes benötigt. Dies kann z.B. auf einem eigenen Server oder bei Anbietern wie AWS mit EC2 instanzen oder auf Azure erfolgen. Die MongoDB-Datenbank könnte ebenfalls entweder auf einem eigenen Server gehostet oder als Managed Service gemietet werden.
-
 
 # Getting Started with Create React App
 
