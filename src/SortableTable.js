@@ -26,15 +26,15 @@ export default function SortableTable({
     let conditional_width;
     switch (key) {
       case "street":
-        conditional_width = "w-1/2"
+        conditional_width = "w-1/2";
         break;
       case "zip":
-        conditional_width = "w-1/6"
+        conditional_width = "w-1/6";
         break;
       case "area":
-        conditional_width = "w-2/6"
+        conditional_width = "w-2/6";
         break;
-                    
+
       default:
         break;
     }
@@ -45,7 +45,7 @@ export default function SortableTable({
         onClick={() => {
           setSorting({
             key: key,
-            asc: (sorting.key === key) && !sorting.asc,
+            asc: sorting.key === key && !sorting.asc,
           });
         }}
       >
@@ -56,7 +56,12 @@ export default function SortableTable({
 
   const rows = preprocessedData.map((entry) => {
     const elements = Object.keys(keyMappings).map((key) => {
-      return <td className="text-left" key={entry.id}> {entry[key]}</td>;
+      return (
+        <td className="text-left" key={entry.id}>
+          {" "}
+          {entry[key]}
+        </td>
+      );
     });
     const isSelected = entry.id === selectedId;
     if (isSelected) {
@@ -66,16 +71,15 @@ export default function SortableTable({
           key={entry.id}
           ref={(ref) => {
             // this uses the ref solely as a way to scroll the selected row into view just at the instance of its selection.
-            if (ref !== null){
-              ref.scrollIntoView({ behavior: "smooth", block: "nearest"});
+            if (ref !== null) {
+              ref.scrollIntoView({ behavior: "smooth", block: "nearest" });
 
               // ugly hack, as the table header is sticky, scrollIntoView treats it like a floating row and scrolls rows which are above the current viewport of the container
-              // such, that while they are inside the viewport of the container, they are still behind the sticky table header. 
-              if (ref.getBoundingClientRect().y < 50){
-                containerRef.current.scrollBy({top:-50})
-              };
+              // such, that while they are inside the viewport of the container, they are still behind the sticky table header.
+              if (ref.getBoundingClientRect().y < 50) {
+                containerRef.current.scrollBy({ top: -50 });
+              }
             }
-          
           }}
           onClick={() => setSelectedId(entry.id)}
         >
@@ -92,10 +96,8 @@ export default function SortableTable({
 
   return (
     <div ref={containerRef} className="flex-grow overflow-auto">
-      <table className="border-spacing-0 w-full content table-fixed">
-        <thead >
-          {tableHeaders}
-        </thead>
+      <table className="border-spacing-0 w-full table-fixed">
+        <thead>{tableHeaders}</thead>
         <tbody>{rows}</tbody>
       </table>
     </div>
