@@ -1,9 +1,8 @@
-import logo from "./logo.svg";
 import "leaflet/dist/leaflet.css";
 
 import { useEffect, useState, useRef } from "react";
 import { useLocalStorage } from "@uidotdev/usehooks";
-import { MapContainer, Marker, TileLayer } from "react-leaflet";
+import { MapContainer, Marker, TileLayer, useMapEvents} from "react-leaflet";
 
 import * as L from "leaflet";
 import SortableTable from "./SortableTable";
@@ -20,6 +19,24 @@ const selectedIcon = L.icon({
   shadowUrl: require("leaflet/dist/images/marker-shadow.png"),
   iconAnchor: [12, 40],
 });
+
+function SelectableMarker({obj, isSelected, setSelectedId}){
+
+  console.log(obj)
+  return obj === null || obj.latlng === null ? null : (
+    <Marker position={obj.latlng}
+    
+    eventHandlers={{
+      click: (e) => {
+        setSelectedId(obj.id);
+      },
+    }}
+    key={obj.id}
+    riseOnHover={true}
+    zIndexOffset={isSelected?100:1}
+    icon={isSelected ? selectedIcon : unselectedIcon}
+/>);
+}
 
 function App() {
   const [query, setQuery] = useState("");
@@ -134,48 +151,22 @@ function App() {
   const markers = preprocessedData.map((obj) => {
     const isSelected = obj.id === selectedId;
     return (
-      <Marker
-        id={obj.id}
-        eventHandlers={{
-          click: (e) => {
-            setSelectedId(obj.id);
-          },
-        }}
-        position={obj.latlng}
-        key={obj.id}
-        riseOnHover={true}
-        zIndexOffset={isSelected?100:1}
-        icon={isSelected ? selectedIcon : unselectedIcon}
-      />
-    );
+      <SelectableMarker obj={obj} isSelected={isSelected} setSelectedId={setSelectedId} />);
   });
 
-  // TODO: This layout isn't optimized for mobile yet. Consider a vertical arrangement for mobile devices.
-
   return (
-    <div style={{ display: "flex", flexDirection: "row", height: "100vh" }}>
+    <div 
+    className="flex flex-col md:flex-row h-screen"
+    >
       <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignContent: "flex-start",
-          justifySelf: "start",
-          minWidth: "450px",
-        }}
-      >
+        className="flex flex-col h-1/3 md:h-screen md:w-1/3">
         <input
+        className="w-full"
           type="text"
           value={query}
           placeholder="Suche nach einer Adresse"
           onChange={(e) => {
             setQuery(e.target.value);
-          }}
-          style={{
-            position: "sticky",
-            height: "25px",
-            top: 0,
-            borderRadius: 6,
-            zIndex: 2,
           }}
         />
         <SortableTable
@@ -188,7 +179,7 @@ function App() {
         />
       </div>
       <MapContainer
-        style={{ flex: 1 }}
+        className="md:w-2/3 md:h-screen h-2/3"
         maxBoundsViscosity={0.5}
         minZoom={10}
         zoomSnap={0.1}
