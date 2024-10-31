@@ -1,5 +1,4 @@
 import logo from "./logo.svg";
-import "./App.css";
 import "leaflet/dist/leaflet.css";
 
 import { useEffect, useState, useRef } from "react";
