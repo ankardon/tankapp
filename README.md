@@ -2,7 +2,13 @@
 
 ![alt text](image.png)
 
-
+## Installation
+```sh
+$ git clone https://github.com/ankardon/tankapp.git
+$ cd tankapp
+$ npm install
+$ npm start
+```
 ## Kollaboratives Arbeiten
 
 Mittel die man für die optimale Zusammenarbeit und verbesserung der Code Qualität einsetzen kann sind vielfältig.
