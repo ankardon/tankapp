@@ -29,10 +29,10 @@ export default function SortableTable({
         conditional_width = "w-1/2";
         break;
       case "zip":
-        conditional_width = "w-1/6";
+        conditional_width = "w-1/4";
         break;
       case "area":
-        conditional_width = "w-2/6";
+        conditional_width = "w-1/4";
         break;
 
       default:
@@ -57,7 +57,7 @@ export default function SortableTable({
   const rows = preprocessedData.map((entry) => {
     const elements = Object.keys(keyMappings).map((key) => {
       return (
-        <td className="text-left" key={entry.id}>
+        <td className="text-left" key={key}>
           {" "}
           {entry[key]}
         </td>
@@ -97,7 +97,7 @@ export default function SortableTable({
   return (
     <div ref={containerRef} className="flex-grow overflow-auto">
       <table className="border-spacing-0 w-full table-fixed">
-        <thead>{tableHeaders}</thead>
+        <thead><tr>{tableHeaders}</tr></thead>
         <tbody>{rows}</tbody>
       </table>
     </div>

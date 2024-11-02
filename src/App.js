@@ -144,7 +144,9 @@ function App() {
           Math.max(maxLng, currentLng),
         ];
       },
-      [1000, 1000, -1000, -1000],
+      // starting values that are definately outside of regular lat lng coords
+      // => they will be rpelaced by any possible valid coord
+      [1000, 1000, -1000, -1000], 
     );
 
   const markers = preprocessedData.map((entry) => {
@@ -189,9 +191,9 @@ function App() {
 
   return (
     <div className="flex flex-col md:flex-row h-screen">
-      <div className="flex flex-col h-1/3 md:h-screen md:w-1/3">
+      <div className="flex flex-col h-1/3 md:h-screen md:w-1/3 p-2">
         <input
-          className="w-full"
+          className="w-full mb-1 "
           type="text"
           value={query}
           placeholder="Suche nach einer Adresse"
